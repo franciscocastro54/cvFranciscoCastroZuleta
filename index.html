@@ -15,9 +15,9 @@
   --navy:#0a192f;
   --light-navy:#112240;
   --lightest-navy:#233554;
-  --slate:#8892b0;
-  --light-slate:#a8b2d8;
-  --lightest-slate:#ccd6f6;
+  --slate:#bac4e4;
+  --light-slate:#d5d8e7;
+  --lightest-slate:#e8ebf5;
   --white:#e6f1ff;
   --green:#64ffda;
   --green-tint:rgba(100,255,218,0.1);
@@ -26,8 +26,8 @@
   --tr:all 0.25s cubic-bezier(0.645,0.045,0.355,1);
   --header-h:60px;
 }
-html{scroll-behavior:smooth;overflow-x:hidden;}
-body{background:var(--navy);color:var(--slate);font-family:var(--font-sans);font-size:16px;line-height:1.6;overflow-x:hidden;width:100%;}
+html{scroll-behavior:smooth;overflow-x:clip;}
+body{background:var(--navy);color:var(--slate);font-family:var(--font-sans);font-size:16px;line-height:1.6;overflow-x:clip;width:100%;}
 body.menu-open{overflow:hidden;}
 ::-webkit-scrollbar{width:6px;}
 ::-webkit-scrollbar-track{background:var(--navy);}
@@ -617,6 +617,10 @@ function App() {
   useEffect(() => {
     const ids = ['about','experience','projects','contact'];
     const fn = () => {
+      if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 10) {
+        setActiveNav(ids.length - 1);
+        return;
+      }
       const y = window.scrollY + window.innerHeight / 3;
       let cur = 0;
       ids.forEach((id, i) => { const el = document.getElementById(id); if (el && el.offsetTop <= y) cur = i; });
