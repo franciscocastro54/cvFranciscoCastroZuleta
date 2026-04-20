@@ -657,7 +657,9 @@ function App() {
       <div className="mobile-header-right">
         <button onClick={switchLang} className="lang-toggle" style={{marginBottom:0}}>
           <span className={lang==='es'?'active':''}>ES</span>
-          <span className="lang-sep">|</span>
+        </button>
+        <span >hola</span>
+        <button onClick={switchLang} className="lang-toggle" style={{marginBottom:0}}>
           <span className={lang==='en'?'active':''}>EN</span>
         </button>
         <button className={`hamburger ${menuOpen?'open':''}`} onClick={() => setMenuOpen(o => !o)} aria-label="Menú">
@@ -681,7 +683,10 @@ function App() {
         <div>
           <button onClick={switchLang} className="lang-toggle">
             <span className={lang==='es'?'active':''}>ES</span>
-            <span className="lang-sep">|</span>
+          </button>
+            <span className="lang-sep"> | </span>
+
+          <button onClick={switchLang} className="lang-toggle">
             <span className={lang==='en'?'active':''}>EN</span>
           </button>
           <p className="intro-label">{t.greeting}</p>
