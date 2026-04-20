@@ -24,9 +24,11 @@
   --font-sans:'Inter',sans-serif;
   --font-mono:'JetBrains Mono',monospace;
   --tr:all 0.25s cubic-bezier(0.645,0.045,0.355,1);
+  --header-h:60px;
 }
 html{scroll-behavior:smooth;}
 body{background:var(--navy);color:var(--slate);font-family:var(--font-sans);font-size:16px;line-height:1.6;overflow-x:hidden;}
+body.menu-open{overflow:hidden;}
 ::-webkit-scrollbar{width:6px;}
 ::-webkit-scrollbar-track{background:var(--navy);}
 ::-webkit-scrollbar-thumb{background:var(--lightest-navy);border-radius:3px;}
@@ -48,7 +50,12 @@ body{background:var(--navy);color:var(--slate);font-family:var(--font-sans);font
   display:flex;flex-direction:column;justify-content:space-between;
   padding:80px 32px 60px 60px;
 }
-@media(max-width:900px){.left{position:relative;height:auto;padding:80px 30px 20px;}}
+@media(max-width:900px){
+  .left{position:relative;height:auto;padding:calc(var(--header-h) + 24px) 30px 32px;}
+}
+@media(max-width:480px){
+  .left{padding:calc(var(--header-h) + 20px) 16px 28px;}
+}
 
 .lang-toggle{
   display:inline-flex;align-items:center;gap:8px;
@@ -63,10 +70,13 @@ body{background:var(--navy);color:var(--slate);font-family:var(--font-sans);font
 .main-name{font-size:clamp(32px,4.5vw,52px);font-weight:700;color:var(--lightest-slate);line-height:1.1;margin-bottom:10px;}
 .main-role{font-size:clamp(15px,2vw,20px);font-weight:500;color:var(--light-slate);line-height:1.4;margin-bottom:20px;}
 .main-desc{font-size:14px;color:var(--slate);max-width:300px;line-height:1.8;}
+@media(max-width:900px){.main-desc{max-width:100%;}}
 
 .nav{margin-top:44px;display:flex;flex-direction:column;gap:4px;}
+@media(max-width:900px){.nav{display:none;}}
+
 .nav-item{
-  display:flex;align-items:center;gap:12px;
+  display:flex;align-items:center;gap:12px;min-height:44px;
   font-family:var(--font-mono);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;
   color:var(--slate);cursor:pointer;border:none;background:none;text-align:left;
   padding:5px 0;transition:var(--tr);width:fit-content;
@@ -77,7 +87,8 @@ body{background:var(--navy);color:var(--slate);font-family:var(--font-sans);font
 .nav-item.active{color:var(--green);}
 
 .socials{display:flex;align-items:center;gap:18px;margin-top:44px;}
-.social-link{color:var(--slate);transition:var(--tr);display:flex;align-items:center;}
+@media(max-width:900px){.socials{margin-top:24px;}}
+.social-link{color:var(--slate);transition:var(--tr);display:flex;align-items:center;padding:6px;margin:-6px;}
 .social-link:hover{color:var(--green);transform:translateY(-3px);}
 .social-link svg{width:19px;height:19px;fill:currentColor;}
 
@@ -91,6 +102,7 @@ body{background:var(--navy);color:var(--slate);font-family:var(--font-sans);font
 /* RIGHT */
 .right{padding:80px 60px 80px 32px;}
 @media(max-width:900px){.right{padding:20px 30px 80px;}}
+@media(max-width:480px){.right{padding:16px 16px 60px;}}
 
 /* SECTION */
 .section{margin-bottom:96px;opacity:0;transform:translateY(24px);transition:opacity 0.55s ease,transform 0.55s ease;}
@@ -101,15 +113,18 @@ body{background:var(--navy);color:var(--slate);font-family:var(--font-sans);font
   font-size:19px;font-weight:600;color:var(--lightest-slate);
   margin-bottom:36px;white-space:nowrap;
 }
+@media(max-width:480px){.section-heading{white-space:normal;font-size:17px;}}
 .section-heading .num{font-family:var(--font-mono);font-size:13px;color:var(--green);}
-.section-heading::after{content:'';height:1px;flex:1;background:var(--lightest-navy);}
+.section-heading::after{content:'';height:1px;flex:1;background:var(--lightest-navy);min-width:20px;}
 
 /* ABOUT */
 .about-text{color:var(--slate);line-height:1.8;font-size:15px;max-width:540px;}
 .about-text p{margin-bottom:14px;}
+@media(max-width:900px){.about-text{max-width:100%;}}
 
 .skills-label{font-size:14px;color:var(--light-slate);margin:24px 0 12px;font-weight:500;}
 .skills-categories{display:flex;flex-direction:column;gap:16px;max-width:540px;}
+@media(max-width:900px){.skills-categories{max-width:100%;}}
 .skill-cat-title{
   font-family:var(--font-mono);font-size:11px;color:var(--green);
   letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;
@@ -124,18 +139,33 @@ body{background:var(--navy);color:var(--slate);font-family:var(--font-sans);font
 
 /* EXPERIENCE */
 .exp-wrapper{display:flex;gap:0;}
-.exp-tabs{
-  display:flex;flex-direction:column;
-  border-left:2px solid var(--lightest-navy);flex-shrink:0;
+.exp-tabs-wrapper{
+  display:flex;flex-direction:column;flex-shrink:0;
+  border-left:2px solid var(--lightest-navy);
 }
 @media(max-width:640px){
   .exp-wrapper{flex-direction:column;}
-  .exp-tabs{flex-direction:row;border-left:none;border-bottom:2px solid var(--lightest-navy);overflow-x:auto;}
+  .exp-tabs-wrapper{
+    flex-direction:row;border-left:none;border-bottom:2px solid var(--lightest-navy);
+    position:relative;
+  }
+  .exp-tabs-wrapper::after{
+    content:'';position:absolute;right:0;top:0;bottom:0;width:32px;
+    background:linear-gradient(to right,transparent,var(--navy));
+    pointer-events:none;
+  }
+}
+.exp-tabs{
+  display:flex;flex-direction:column;
+}
+@media(max-width:640px){
+  .exp-tabs{flex-direction:row;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;}
+  .exp-tabs::-webkit-scrollbar{display:none;}
 }
 .exp-tab{
   font-family:var(--font-mono);font-size:12px;
   color:var(--slate);background:none;border:none;
-  padding:11px 18px;cursor:pointer;text-align:left;
+  padding:11px 18px;min-height:44px;cursor:pointer;text-align:left;
   white-space:nowrap;border-left:2px solid transparent;
   margin-left:-2px;transition:var(--tr);
 }
@@ -157,6 +187,7 @@ body{background:var(--navy);color:var(--slate);font-family:var(--font-sans);font
 
 /* PROJECTS */
 .projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;}
+@media(max-width:480px){.projects-grid{grid-template-columns:1fr;}}
 .project-card{
   background:var(--light-navy);border-radius:6px;padding:24px;
   transition:var(--tr);border:1px solid transparent;
@@ -170,7 +201,7 @@ body{background:var(--navy);color:var(--slate);font-family:var(--font-sans);font
 .project-folder{color:var(--green);}
 .project-folder svg{width:32px;height:32px;}
 .project-links{display:flex;gap:10px;}
-.project-links a{color:var(--slate);transition:var(--tr);display:flex;}
+.project-links a{color:var(--slate);transition:var(--tr);display:flex;padding:4px;}
 .project-links a:hover{color:var(--green);}
 .project-links svg{width:17px;height:17px;fill:currentColor;}
 .project-name{font-size:15px;font-weight:600;color:var(--lightest-slate);margin-bottom:8px;}
@@ -180,6 +211,7 @@ body{background:var(--navy);color:var(--slate);font-family:var(--font-sans);font
 
 /* CONTACT */
 .contact-inner{text-align:center;max-width:520px;margin:0 auto;}
+@media(max-width:900px){.contact-inner{max-width:100%;}}
 .contact-label{font-family:var(--font-mono);font-size:13px;color:var(--green);margin-bottom:16px;}
 .contact-inner h2{font-size:clamp(28px,4vw,44px);font-weight:700;color:var(--lightest-slate);margin-bottom:20px;}
 .contact-inner p{font-size:15px;color:var(--slate);margin-bottom:36px;line-height:1.8;}
@@ -199,15 +231,49 @@ body{background:var(--navy);color:var(--slate);font-family:var(--font-sans);font
 .footer a{color:inherit;text-decoration:none;}
 .footer a:hover{color:var(--green);}
 
+/* MOBILE HEADER */
 .mobile-header{
-  display:none;position:fixed;top:0;left:0;right:0;
+  display:none;position:fixed;top:0;left:0;right:0;height:var(--header-h);
   background:rgba(10,25,47,0.92);backdrop-filter:blur(12px);
-  padding:14px 30px;z-index:100;
+  padding:0 30px;z-index:200;align-items:center;justify-content:space-between;
 }
-@media(max-width:900px){
-  .mobile-header{display:flex;justify-content:space-between;align-items:center;}
-  .left{padding-top:76px;}
+@media(max-width:900px){.mobile-header{display:flex;}}
+@media(max-width:480px){.mobile-header{padding:0 16px;}}
+
+.mobile-header-right{display:flex;align-items:center;gap:16px;}
+
+.hamburger{
+  display:flex;flex-direction:column;justify-content:center;gap:5px;
+  width:44px;height:44px;background:none;border:none;cursor:pointer;
+  padding:10px 8px;transition:var(--tr);
 }
+.hamburger span{
+  display:block;height:1.5px;background:var(--lightest-slate);
+  border-radius:2px;transition:var(--tr);transform-origin:center;
+}
+.hamburger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0);}
+.hamburger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);}
+
+/* NAV OVERLAY */
+.nav-overlay{
+  position:fixed;inset:0;z-index:150;
+  background:rgba(10,25,47,0.98);backdrop-filter:blur(20px);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+  opacity:0;pointer-events:none;
+  transition:opacity 0.3s ease;
+}
+.nav-overlay.open{opacity:1;pointer-events:all;}
+
+.overlay-num{font-family:var(--font-mono);font-size:12px;color:var(--green);display:block;margin-bottom:2px;}
+.overlay-nav-item{
+  font-size:22px;font-weight:600;letter-spacing:0.04em;
+  color:var(--lightest-slate);background:none;border:none;cursor:pointer;
+  padding:14px 32px;transition:var(--tr);text-align:center;
+  display:flex;flex-direction:column;align-items:center;
+}
+.overlay-nav-item:hover,.overlay-nav-item.active{color:var(--green);}
+@media(max-width:480px){.overlay-nav-item{font-size:18px;padding:12px 24px;}}
 
 /* Education badge */
 .edu-block{
@@ -215,6 +281,7 @@ body{background:var(--navy);color:var(--slate);font-family:var(--font-sans);font
   border:1px solid var(--lightest-navy);border-radius:6px;max-width:540px;
   display:flex;gap:16px;align-items:flex-start;
 }
+@media(max-width:900px){.edu-block{max-width:100%;}}
 .edu-icon{color:var(--green);flex-shrink:0;margin-top:2px;}
 .edu-icon svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.5;}
 .edu-title{font-size:14px;font-weight:500;color:var(--lightest-slate);}
@@ -364,7 +431,7 @@ const CONTENT = {
     contact_title: "Conectemos",
     contact_desc: "Estoy abierto a nuevas oportunidades, colaboraciones en XR / IA, o simplemente una buena conversación técnica. Mi bandeja de entrada siempre está abierta.",
     contact_btn: "Escríbeme",
-    cv_btn: "Ver portafolio",
+    cv_btn: "website personal",
     cv_download: "Descargar CV",
     edu_title: "Analista Programador",
     edu_sub: "Inacap Renca · 2022",
@@ -526,14 +593,24 @@ function App() {
   const [lang, setLang] = useState(() => localStorage.getItem('pf-lang') || 'es');
   const [activeNav, setActiveNav] = useState(0);
   const [activeTab, setActiveTab] = useState(0);
+  const [menuOpen, setMenuOpen] = useState(false);
   const t = CONTENT[lang];
   const skills = SKILLS_DATA[lang];
 
   useEffect(() => {
     const el = document.getElementById('spotlight');
-    const fn = (e) => { el.style.setProperty('--mx', e.clientX+'px'); el.style.setProperty('--my', e.clientY+'px'); };
-    window.addEventListener('mousemove', fn);
-    return () => window.removeEventListener('mousemove', fn);
+    const onMove = (x, y) => { el.style.setProperty('--mx', x+'px'); el.style.setProperty('--my', y+'px'); };
+    const onMouse = (e) => onMove(e.clientX, e.clientY);
+    const onTouch = (e) => {
+      const touch = e.touches[0];
+      if (touch) onMove(touch.clientX, touch.clientY);
+    };
+    window.addEventListener('mousemove', onMouse);
+    window.addEventListener('touchmove', onTouch, { passive: true });
+    return () => {
+      window.removeEventListener('mousemove', onMouse);
+      window.removeEventListener('touchmove', onTouch);
+    };
   }, []);
 
   useEffect(() => {
@@ -548,27 +625,49 @@ function App() {
     return () => window.removeEventListener('scroll', fn);
   }, []);
 
+  useEffect(() => {
+    document.body.classList.toggle('menu-open', menuOpen);
+    return () => document.body.classList.remove('menu-open');
+  }, [menuOpen]);
+
   const switchLang = () => {
     const next = lang === 'es' ? 'en' : 'es';
     setLang(next); localStorage.setItem('pf-lang', next);
   };
 
+  const headerH = 60;
   const scrollTo = (id, i) => {
     setActiveNav(i);
+    setMenuOpen(false);
     const el = document.getElementById(id);
-    if (el) window.scrollTo({ top: el.offsetTop - 60, behavior: 'smooth' });
+    if (el) window.scrollTo({ top: el.offsetTop - headerH, behavior: 'smooth' });
   };
 
   const navIds = ['about','experience','projects','contact'];
+  const navNums = ['01.','02.','03.','04.'];
 
   return <>
     <div className="mobile-header">
       <span style={{fontFamily:'var(--font-mono)',color:'var(--green)',fontSize:13,fontWeight:600}}>fc.</span>
-      <button onClick={switchLang} className="lang-toggle" style={{marginBottom:0}}>
-        <span className={lang==='es'?'active':''}>ES</span>
-        <span className="lang-sep">|</span>
-        <span className={lang==='en'?'active':''}>EN</span>
-      </button>
+      <div className="mobile-header-right">
+        <button onClick={switchLang} className="lang-toggle" style={{marginBottom:0}}>
+          <span className={lang==='es'?'active':''}>ES</span>
+          <span className="lang-sep">|</span>
+          <span className={lang==='en'?'active':''}>EN</span>
+        </button>
+        <button className={`hamburger ${menuOpen?'open':''}`} onClick={() => setMenuOpen(o => !o)} aria-label="Menú">
+          <span/><span/><span/>
+        </button>
+      </div>
+    </div>
+
+    <div className={`nav-overlay ${menuOpen?'open':''}`} onClick={(e) => { if (e.target === e.currentTarget) setMenuOpen(false); }}>
+      {t.nav.map((label, i) => (
+        <button key={i} className={`overlay-nav-item ${activeNav===i?'active':''}`} onClick={() => scrollTo(navIds[i], i)}>
+          <span className="overlay-num">{navNums[i]}</span>
+          {label}
+        </button>
+      ))}
     </div>
 
     <div className="layout">
@@ -651,10 +750,12 @@ function App() {
         <Section id="experience">
           <h2 className="section-heading"><span className="num">02.</span> {t.exp_heading}</h2>
           <div className="exp-wrapper">
-            <div className="exp-tabs">
-              {t.exp.map((e,i) => (
-                <button key={i} className={`exp-tab ${activeTab===i?'active':''}`} onClick={()=>setActiveTab(i)}>{e.tab}</button>
-              ))}
+            <div className="exp-tabs-wrapper">
+              <div className="exp-tabs">
+                {t.exp.map((e,i) => (
+                  <button key={i} className={`exp-tab ${activeTab===i?'active':''}`} onClick={()=>setActiveTab(i)}>{e.tab}</button>
+                ))}
+              </div>
             </div>
             <div className="exp-content">
               <h3>{t.exp[activeTab].role} <span>@ {t.exp[activeTab].company}</span></h3>
@@ -698,7 +799,7 @@ function App() {
             <div className="btn-group">
               <a href="mailto:francisco.castro.init@gmail.com" className="btn">{t.contact_btn}</a>
               <a href="CV_Francisco_Castro.pdf" download className="btn" style={{display:'inline-flex',alignItems:'center',gap:7}}><DownloadIcon/>{t.cv_download}</a>
-              <a href="https://franciscocastro54.github.io/cvFranciscoCastroZuleta/" target="_blank" rel="noreferrer" className="btn secondary">{t.cv_btn}</a>
+              <a href="https://franciscocastro.cl" target="_blank" rel="noreferrer" className="btn secondary">{t.cv_btn}</a>
             </div>
           </div>
         </Section>
