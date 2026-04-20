@@ -121,6 +121,7 @@ story.append(Paragraph("Desarrollador XR/AR/VR · Inteligencia Artificial · Ful
 contact_line = (
     "francisco.castro.init@gmail.com  |  +56 9 3523 2158  |  Chile  |  "
     "<link href='https://linkedin.com/in/francisco-castro-zuleta/' color='#1a56db'>LinkedIn</link>  |  "
+    "<link href='https://franciscocastro54.github.io/cvFranciscoCastroZuleta/' color='#1a56db'>Portafolio</link>  |  "
     "<link href='https://franciscocastro.cl' color='#1a56db'>franciscocastro.cl</link>  |  "
     "<link href='https://github.com/franciscocastro54' color='#1a56db'>GitHub</link>"
 )
@@ -215,7 +216,8 @@ story.append(project_block(
     "franciscocastro.cl / propiedadesyparcelasenpirque.cl",
     "Desarrollador Front-End · 2025 – Presente",
     [
-        "franciscocastro.cl: Vite + React + TypeScript, priorizado en performance y mantenibilidad.",
+        "franciscocastro.cl: website personal especializada en la visualización de modelos Gaussian Splatting en web de manera optimizada, con rendering en tiempo real directamente en el navegador.",
+        "Portafolio profesional publicado en franciscocastro54.github.io/cvFranciscoCastroZuleta/",
         "propiedadesyparcelasenpirque.cl: arquitectura escalable de componentes y optimización de carga.",
     ]
 ))

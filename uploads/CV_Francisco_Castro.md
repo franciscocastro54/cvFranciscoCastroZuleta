@@ -55,7 +55,8 @@ Combino desarrollo Full-Stack (C#, Python, React, Django) con integración de IA
 
 ### franciscocastro.cl / propiedadesyparcelasenpirque.cl
 *Desarrollador Front-End* | **2025 – Presente**
-* Desarrollo y mantenimiento de franciscocastro.cl con Vite + React + TypeScript, priorizado en performance y mantenibilidad.
+* franciscocastro.cl: website personal especializada en la visualización de modelos Gaussian Splatting en web de manera optimizada, con rendering en tiempo real directamente en el navegador.
+* Portafolio profesional publicado en https://franciscocastro54.github.io/cvFranciscoCastroZuleta/
 * Desarrollo de propiedadesyparcelasenpirque.cl con arquitectura escalable de componentes y optimización de carga.
 
 ### Sistema de Análisis de Archivos PDF y CSV mediante IA
